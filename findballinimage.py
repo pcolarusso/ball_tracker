@@ -12,7 +12,7 @@ hsvimg = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 #Define thresholds
 #True value for white in HSV is (0-255,0-255, 255) only Value matters for white
 white_lower = np.array([0,0,127])
-white_upper = np.array([180,255,255])
+white_upper = np.array([180,127,255])
 
 #Threshold the HSV image to get only white colors
 #Image is a mask of only colors in the threshold values

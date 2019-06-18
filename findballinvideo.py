@@ -13,8 +13,10 @@ if not cap.isOpened():
 
 #Add trackbars to change settings to adjust to different lighting conditions and ball sizes
 cv.namedWindow('Adjustments')
-cv.createTrackbar('White Lower Threshold','Adjustments',0,255,doNothing)
-cv.createTrackbar('White Upper Threshold','Adjustments',0,255,doNothing)
+cv.createTrackbar('White Lower Threshold Value','Adjustments',0,255,doNothing)
+cv.createTrackbar('White Upper Threshold Value','Adjustments',0,255,doNothing)
+cv.createTrackbar('White Lower Threshold Saturation','Adjustments',0,255,doNothing)
+cv.createTrackbar('White Upper Threshold Saturation','Adjustments',0,255,doNothing)
 cv.createTrackbar('Min Radius','Adjustments',0,255,doNothing)
 cv.createTrackbar('Max Radius','Adjustments',0,255,doNothing)
 
@@ -27,8 +29,10 @@ while True:
         break
     
     #Grab Values from trackbars
-    low_thresh = cv.getTrackbarPos('White Lower Threshold','Adjustments')
-    high_thresh = cv.getTrackbarPos('White Upper Threshold','Adjustments')
+    low_threshv = cv.getTrackbarPos('White Lower Threshold Value','Adjustments')
+    high_threshv = cv.getTrackbarPos('White Upper Threshold Value','Adjustments')
+    low_threshs = cv.getTrackbarPos('White Lower Threshold Saturation','Adjustments')
+    high_threshs = cv.getTrackbarPos('White Upper Threshold Saturation','Adjustments')
     minradius = cv.getTrackbarPos('Min Radius','Adjustments')
     maxradius = cv.getTrackbarPos('Max Radius','Adjustments')
     
@@ -36,9 +40,9 @@ while True:
     hsvimg = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     
     #Define thresholds
-    #True value for white in HSV is (0-180,0-255, 255) only Value matters for white
-    white_lower = np.array([0,0,low_thresh])
-    white_upper = np.array([180,255,high_thresh])
+    #True value for white in HSV is (0-255,0-255, 255) only Saturation and Value matters for white
+    white_lower = np.array([0,low_threshs,low_threshv])
+    white_upper = np.array([180,high_threshs,high_threshv])
     
     #Threshold the HSV image to get only white colors
     #Image is a mask of only colors in the threshold values
